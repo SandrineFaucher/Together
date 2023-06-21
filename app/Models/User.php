@@ -43,7 +43,7 @@ public function isAdmin()
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
+        'pseudo',
         'email',
         'password',
     ];
