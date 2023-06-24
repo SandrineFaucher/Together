@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Facades\Auth;
 
 class Post extends Model
 {
@@ -25,4 +26,17 @@ class Post extends Model
     {
         return $this->hasMany(Comment::class);
     }
+
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
+    protected $fillable = [
+        'content',
+        'image',
+        'tags',
+        'user_id',
+    ];
 }
