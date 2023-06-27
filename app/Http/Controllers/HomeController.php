@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Post;
+use App\Models\Comment;
 
 class HomeController extends Controller
 {
@@ -78,6 +79,7 @@ class HomeController extends Controller
 
         //je veux charger en + l'utilisateur qui a posté chaque commentaire
         $posts = Post::with('comments.user', 'user')->latest()->paginate(10);
+        
 
         //je teste la liste
        // dd($posts);
@@ -88,5 +90,4 @@ class HomeController extends Controller
         //autre syntaxe
         // return view('home', compact('posts'))<
     }
-
 }

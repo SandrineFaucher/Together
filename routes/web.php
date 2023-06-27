@@ -42,4 +42,5 @@ Route::resource('/users', App\Http\Controllers\UserController::class)->except('i
 Route::resource('/posts', App\Http\Controllers\PostController::class)->except('index','create','show');
 
 
-//*************************Route pour afficher les commentaires *************************/
+//*************************Route resource comments *************************/
+Route::resource('/comments',\App\Http\Controllers\CommentController::class)->except('index', 'create', 'show');
