@@ -155,7 +155,7 @@
                                     
                                     <div class="button text-center mt-5">
                                         <input type="hidden"  value="{{$post->id}}" name="post_id">
-                                        <button type="submit">
+                                        <button type="submit"class="btn btn-secondary" >
                                             Envoyer
                                         </button>
                                         
@@ -182,10 +182,34 @@
                                     <p>{{ $comment->content }}</p>
                                 </div>
                                 <div class="col-md-3 mx-auto my-auto">
-                                    <p>{{ $comment->tags }}</P>
+                                    <p>#{{ implode(' #', explode(' ', $comment->tags)) }}</P>
                                 </div>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <a href="{{ route('comments.edit', $comment) }}">
+                                            <!-- *************************Bouton de modification *********************************-->
+                                            <button class="btn btn-info" name="modifier">modifier</button>
+                                        </a>
+                                    </div>
+        
+                                    <div class="col-md-4">
+                                        <form action="{{ route('comments.destroy', $comment) }}" method="POST">
+                                            @csrf
+                                            @method('delete')
+                                            <button type="submit" class="btn btn-danger">supprimer </button>
+                                        </form>
+                                    </div>
+        
+                                </div>
+
+
                             @endforeach
+
+
                         </div>
+
+                        <!-- boutons de modification et suppression des commentaires  -->
+                        
 
                     </div>
                     

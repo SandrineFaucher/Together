@@ -43,24 +43,49 @@ class CommentController extends Controller
      /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Comment $comment)
     {
-        //
+        // affichage du formulaire de modification 
+        //['nom variable dans vue' => variable]
+        return view('comments/edit' , ['comment' => $comment]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Comment $comment, Request $request)
     {
-        //
+                // validation des données à modifier 
+                 $request->validate([
+                'image' => 'nullable',
+                'content' => 'required|min:25|max:1000',
+                'tags' => 'required|min:3|max:50'
+            ]);
+    
+            //on sauvegarde les modifications en bdd
+            $comment->update([
+            'image' => $request->input('image'),
+            'content' => $request->input('content'),
+            'tags' => $request->input('tags'),
+                        
+            ]);
+
+            return redirect()->route('home')->with('message', 'Votre commentaire a bien été modifié');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Comment $comment)
     {
-        //
+        //on vérifie que c'est bien l'utilisateur connecté qui fait la demande de suppression
+        // (les id doivent être identiques)
+        
+
+            $comment->delete();   // on réalise la suppression
+            return redirect()->route('home')->with('message', 'Le commentaire a bien été supprimé');
+              
+            
     }
 }
+    
