@@ -1,9 +1,18 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="background">
 
-        <!--*****************************titre*******************************************-->
+    
+    <div class="background text-center">
+
+        <!-- si je viens de la route recherche par mot clé -->
+        @if (Route::currentRouteName() == 'search')
+        <h1 class="m-5">Résultats pour votre recherche </h1>
+        @else
+
+
+
+        <!--*****************************titre***********************************************-->
         <div class="text-center  mb-5">
             <h1> LET'S WRITE TOGETHER <i class="fa-solid fa-pen-fancy"></i> </h1>
         </div>
@@ -14,7 +23,7 @@
             <!--balise de sécurité contre les failles csrf-->
 
 
-            <!--****************************input image *************************************-->
+            <!--****************************input image ***********************************-->
 
             <div class="updateimage mx-auto w-50 mt-5 mb-2 text-center">
                 <label class="uploadimage"> Importer une image < à 2 MO <input
@@ -66,20 +75,24 @@
                 </button>
             </div>
         </form>
-
-
-
+        @endif
+        
         <!--*********************  Boucle qui affiche les messages ******************************-->
+        <!--***********************condition pour les résultats de la recherche******************-->
+        @if (count($posts) == 0)
+            <img src="{{asset('images/searchnofound.jpg')}}" alt="imageloupe" class="imagesearchnofound m-5">
+           <h3 class="m-5"> Aucun résultat pour votre recherche </h3>
 
-
+        @else 
         @foreach ($posts as $post)
             <div class="container card m-3 mx-auto">
                 <div class="updateimage mx-auto w-50 mt-5 mb-2 text-center">
                     <img class="card-img-top" src="images/{{$post->image}}" alt="post-image" name="image.jpg">
                 </div>
                 <div class="card-body text-center">
-                    <p> {{ $post->user->pseudo }} </p>
-                    <img class="card-img-top w-25" src="images/{{$post->user->image}}" alt="post-image" name="image.jpg">
+                                       
+                    <h4> {{ $post->user->pseudo }} </h4>
+                    <img class="card-img-top imageuser" src="images/{{$post->user->image}}" alt="post-image" name="image.jpg">
                     <p class="card-text">{{ $post->content }}</p>
                     <p class="card-text"> #{{ implode(' #', explode(' ', $post->tags)) }}</p>
 
@@ -169,6 +182,7 @@
                     <div class="card-body text-center">
                         <h5 class="m-5">Commentaires</h5>
                         <div class="row">
+
                             @foreach ($post->comments as $comment)
                                 <!--grâce à l'eager loading lors de la récupération des posts, je crée un alias de l'objet comment
                             table 'comment' et je peux ainsi récupérer ses champs pour les afficher-->
@@ -208,15 +222,13 @@
 
                         </div>
 
-                        <!-- boutons de modification et suppression des commentaires  -->
-                        
-
                     </div>
                     
                 </div>
               </div>
         @endforeach
-    </div>
+    @endif
+</div>
 
-    </div>
+</div>
 @endsection

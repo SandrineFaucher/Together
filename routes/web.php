@@ -43,4 +43,7 @@ Route::resource('/posts', App\Http\Controllers\PostController::class)->except('i
 
 
 //*************************Route resource comments *************************/
-Route::resource('/comments',\App\Http\Controllers\CommentController::class)->except('index', 'create', 'show');
+Route::resource('/comments', App\Http\Controllers\CommentController::class)->except('index', 'create', 'show');
+
+//************************ Route pour la recherche dans la barre de navigation***********/
+Route::get('/search', [App\Http\Controllers\PostController::class, 'search'])->name('search');

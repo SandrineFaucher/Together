@@ -3,3 +3,20 @@
     background-color: rgb(62, 243, 180);
 
 }
+
+.imageuser{
+    width: 40px;
+}
+
+h5::after {
+    display: block;
+    height: 2px;
+    background-color: rgb(45, 118, 45);
+    width: 800px;
+    content: " ";
+    margin-top: 10px;
+}
+
+.imagesearchnofound{
+    width: 400px;
+}

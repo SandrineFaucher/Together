@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\Post;
 use Illuminate\Support\Facades\Auth;
 
+
 class PostController extends Controller
 
 {
@@ -94,4 +95,25 @@ class PostController extends Controller
             return redirect()->back()->withErrors(['erreur'=> 'suppression du post impossible']);
             }
     }
+
+    public function search(Request $request){
+
+        // Je récupère le mot clé et j'enlève les espaces autour pour la comparaison
+        $keyword = trim($request->get('search'));
+
+
+        // Je valide la saisie avec des critères
+        $request->validate([
+            //'name de 'input' => [critères]
+            'search' => 'required|min:3|max:20|string'
+        ]);
+
+        // je récupère les posts en fonction du mot clé dans la recherche 
+        $posts = Post::where('tags', 'like', "%{$keyword}%")
+        ->orWhere('content','like' , "%{$keyword}%")   
+        ->get();
+       
+        return view('home', ['posts' => $posts]);
+    }
+
 }

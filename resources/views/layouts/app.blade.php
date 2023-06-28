@@ -40,7 +40,11 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav me-auto">
-
+                        <form class="d-flex" role="search" action="/search" methode="GET" role="search">
+                            @csrf
+                            <input class="form-control me-2" type="search" placeholder="Recherche par mot clé" aria-label="Search" name="search">
+                            <button class="btn btn-outline-success" type="submit">Rechercher</button>
+                        </form>
                     </ul>
 
                     <!-- Right Side Of Navbar -->
