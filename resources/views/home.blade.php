@@ -18,7 +18,7 @@
         </div>
 
         <!-- ************************Formulaire d'ajout de message*************************-->
-        <form action="{{ route('posts.store') }}" method="POST">
+        <form action="{{ route('posts.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <!--balise de sécurité contre les failles csrf-->
 
@@ -43,7 +43,7 @@
 
             <div class="container-fluid postuser text-center mt-1 mb-5">
 
-                <div class="mb-3 w-50 mx-auto">
+                <div class="mb-3 w-50 mx-auto"><i class="fa-solid fa-pen-fancy"></i>
                     <label for="exampleFormControlTextarea1" class="form-label">Commentaire</label>
                     <textarea class="form-control @error('content') is-invalid @enderror" id="exampleFormControlTextarea1" rows="3"
                         name="content"></textarea>
@@ -55,7 +55,7 @@
                     </span>
                 @enderror
 
-                <!--******************************input tags****************************************-->
+                <!--**************************************input tags**************************************************-->
                 <div class="mb-3 w-50 mx-auto">
                     <label> <i class="fa-solid fa-hashtag"></i> </label>
                     <input class="form-control @error('tags') is-invalid @enderror" type="text" placeholder="Mots clés"
@@ -79,10 +79,12 @@
         
         <!--*********************  Boucle qui affiche les messages ******************************-->
         <!--***********************condition pour les résultats de la recherche******************-->
+        <!-- s'il n'y a pas de résultat de recherche j'affiche une image de loupe****************-->
         @if (count($posts) == 0)
             <img src="{{asset('images/searchnofound.jpg')}}" alt="imageloupe" class="imagesearchnofound m-5">
            <h3 class="m-5"> Aucun résultat pour votre recherche </h3>
 
+        <!-- Sinon j'affiche les posts -->
         @else 
         @foreach ($posts as $post)
             <div class="container card m-3 mx-auto">
@@ -130,7 +132,7 @@
                             <!-- script javascript pour le formulaire qui s'affiche en accordéon avec le bouton commentaire -->
                             <div style="display:none" class="col p-3 mb-2" id="formulairecommentaire{{ $post->id }}">
                                 <!--nouveau formulaire pour ajouter un commentaire au post -->
-                                <form action="{{ route('comments.store') }}" method="POST">
+                                <form action="{{ route('comments.store') }}" method="POST" enctype="multipart/form-data">
                                     @csrf
                                     @method('post')
 
@@ -194,18 +196,27 @@
                             @foreach ($post->comments as $comment)
                                 <!--grâce à l'eager loading lors de la récupération des posts, je crée un alias de l'objet comment
                                 table 'comment' et je peux ainsi récupérer ses champs pour les afficher-->
-                                <div class="col-md-3 mx-auto my-auto">
+                                <div class="col-md-2 mx-auto my-auto">
                                     <p>{{ $comment->created_at }}</p>
                                 </div>
-                                <div class="col-md-3 mx-auto my-auto">
-                                    <img class="card-img-top w-25" src="images/{{$comment->user->image}}" alt="post-image" name="image.jpg">
+
+                                <div class="col-md-2 mx-auto my-auto">
+                                    <img class="card-img-top w-25" src="images/{{$comment->user->image}}" alt="post-image" name="image">
+                                    <p>{{$comment->user->pseudo}}</p>
                                 </div>
-                                <div class="col-md-3">
+
+                                <div class="col-md-2">
                                     <p>{{ $comment->content }}</p>
                                 </div>
-                                <div class="col-md-3 mx-auto my-auto">
+
+                                <div class="col-md-2 mx-auto my-auto">
                                     <p>#{{ implode(' #', explode(' ', $comment->tags)) }}</P>
                                 </div>
+
+                                <div class="col-md-2 mx-auto my-auto ">
+                                <img class="card-img-top w-25" src="images/{{$comment->image}}" alt="comment-image" name="image">
+                                </div>
+
                                 <div class="row">
 
                                     <!-- *************************Bouton de modification commentaire ********************************-->

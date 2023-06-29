@@ -22,7 +22,7 @@ class CommentController extends Controller
             //'name de 'input' => [critères]
             'content' => 'required|min:25|max:1000',
             'tags' => 'required|min:3|max:50',
-            'image' => 'nullable'
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
 
             //autre syntaxe possible : 'content' => ['required', 'min:25', 'max:1000']
         ]);
@@ -31,7 +31,7 @@ class CommentController extends Controller
         Comment::create([
             'content' => $request->content, // syntaxe objet
             'tags' => $request['tags'], // syntaxe tableau associatif
-            'image' => $request->input('image'),
+            'image' => isset($request ['image']) ? uploadImage($request['image']): "default_user.jpg",
             'post_id' => $request['post_id'],
             'user_id' => Auth::user()->id
 

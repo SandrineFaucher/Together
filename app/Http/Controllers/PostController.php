@@ -23,7 +23,7 @@ class PostController extends Controller
             //'name de 'input' => [critères]
             'content' => 'required|min:25|max:1000',
             'tags' => 'required|min:3|max:50',
-            'image' => 'nullable'
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             //autre syntaxe possible : 'content' => ['required', 'min:25', 'max:1000']
         ]);
 
@@ -31,7 +31,7 @@ class PostController extends Controller
         Post::create([
             'content' => $request->content, // syntaxe objet
             'tags' => $request['tags'], // syntaxe tableau associatif
-            'image' => $request->input('image'), // autre syntaxe
+            'image' => isset($request ['image']) ? uploadImage($request['image']): "default_user.jpg",
             'user_id' => Auth::user()->id // j'accède à l'Id du user connecté
 
         ]);
