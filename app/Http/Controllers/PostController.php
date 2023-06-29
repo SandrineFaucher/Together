@@ -59,6 +59,9 @@ class PostController extends Controller
      */
     public function update(Post $post , Request $request){
 
+            // double sécurité pour vérifier que ce soit bien l'admin ou l'auteur du poste qui accède à la modification
+            $this->authorize('update', $post);
+
             // validation des données à modifier 
                  $request->validate([
                 'image' => 'nullable',
@@ -73,11 +76,12 @@ class PostController extends Controller
             'tags' => $request->input('tags'),
             
             ]);
-    
-                     
+                         
             // on redirige sur la page précédente
+         
             return redirect()->route('home')->with('message', 'Votre post a bien été modifié');
-        
+            
+            
     }
 
     /**
@@ -85,6 +89,11 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
+
+        // double sécurité pour vérifier que ce soit bien l'admin ou l'auteur du poste qui accède à la modification
+        $this->authorize('delete', $post);
+
+
         //on vérifie que c'est bien l'utilisateur connecté qui fait la demande de suppression
         // (les id doivent être identiques)
         
@@ -94,26 +103,28 @@ class PostController extends Controller
             }else{
             return redirect()->back()->withErrors(['erreur'=> 'suppression du post impossible']);
             }
+
     }
 
     public function search(Request $request){
-
-        // Je récupère le mot clé et j'enlève les espaces autour pour la comparaison
-        $keyword = trim($request->get('search'));
-
-
         // Je valide la saisie avec des critères
         $request->validate([
             //'name de 'input' => [critères]
             'search' => 'required|min:3|max:20|string'
         ]);
 
+
+        // Je récupère le mot clé et j'enlève les espaces autour pour la comparaison
+        $keyword = trim($request->input('search'));
+
+          
         // je récupère les posts en fonction du mot clé dans la recherche 
         $posts = Post::where('tags', 'like', "%{$keyword}%")
         ->orWhere('content','like' , "%{$keyword}%")   
         ->get();
        
         return view('home', ['posts' => $posts]);
+        
     }
 
 }

@@ -97,14 +97,20 @@
                     <p class="card-text"> #{{ implode(' #', explode(' ', $post->tags)) }}</p>
 
                     <div class="row text-center d-flex justify-center">
+
+                        @can('update', $post)
                         <div class="col-md-4">
                             <a href="{{ route('posts.edit', $post) }}">
                                 <!-- *************************Bouton de modification *********************************-->
                                 <button class="btn btn-info" name="modifier">modifier</button>
                             </a>
                         </div>
+                        @endcan
+
 
                         <!--**************************bouton de suppression **************************************-->
+                        
+                        @can('delete', $post)
                         <div class="col-md-4">
                             <form action="{{ route('posts.destroy', $post) }}" method="POST">
                                 @csrf
@@ -112,6 +118,7 @@
                                 <button type="submit" class="btn btn-danger">supprimer </button>
                             </form>
                         </div>
+                        @endcan
 
 
                         <div class="col-md-4"> <!--script javascript pour dérouler le formulaire à partir du bouton coommentaire-->
@@ -177,15 +184,16 @@
                             </div>
                         
                     </div>
-                    <!--**************affichage des commentaires*****************************************************-->
 
+                    <!--*****************************************affichage des commentaires*****************************************-->
                     <div class="card-body text-center">
                         <h5 class="m-5">Commentaires</h5>
+
                         <div class="row">
 
                             @foreach ($post->comments as $comment)
                                 <!--grâce à l'eager loading lors de la récupération des posts, je crée un alias de l'objet comment
-                            table 'comment' et je peux ainsi récupérer ses champs pour les afficher-->
+                                table 'comment' et je peux ainsi récupérer ses champs pour les afficher-->
                                 <div class="col-md-3 mx-auto my-auto">
                                     <p>{{ $comment->created_at }}</p>
                                 </div>
@@ -199,13 +207,19 @@
                                     <p>#{{ implode(' #', explode(' ', $comment->tags)) }}</P>
                                 </div>
                                 <div class="row">
+
+                                    <!-- *************************Bouton de modification commentaire ********************************-->
+                                    @can('update', $comment)
                                     <div class="col-md-4">
                                         <a href="{{ route('comments.edit', $comment) }}">
-                                            <!-- *************************Bouton de modification *********************************-->
-                                            <button class="btn btn-info" name="modifier">modifier</button>
+                                           <button class="btn btn-info" name="modifier">modifier</button>
                                         </a>
                                     </div>
+                                    @endcan
         
+                                    <!-- *************************Bouton de suppression commentaire *********************************-->
+
+                                    @can('delete', $comment)
                                     <div class="col-md-4">
                                         <form action="{{ route('comments.destroy', $comment) }}" method="POST">
                                             @csrf
@@ -213,17 +227,13 @@
                                             <button type="submit" class="btn btn-danger">supprimer </button>
                                         </form>
                                     </div>
+                                    @endcan
+
         
                                 </div>
-
-
                             @endforeach
-
-
                         </div>
-
                     </div>
-                    
                 </div>
               </div>
         @endforeach

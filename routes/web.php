@@ -37,13 +37,18 @@ Auth::routes();
 Route::resource('/users', App\Http\Controllers\UserController::class)->except('index','create','store');
 
 
-
-//*************************route resource posts ****************************************/
+//*************************route resource posts *****************************************************************/
 Route::resource('/posts', App\Http\Controllers\PostController::class)->except('index','create','show');
 
 
 //*************************Route resource comments *************************/
 Route::resource('/comments', App\Http\Controllers\CommentController::class)->except('index', 'create', 'show');
 
-//************************ Route pour la recherche dans la barre de navigation***********/
+//************************ Route pour la recherche dans la barre de navigation***********************************/
 Route::get('/search', [App\Http\Controllers\PostController::class, 'search'])->name('search');
+
+
+//******************Routes pour générer le formulaire et pour la méthode de publication *************************/
+Route::get( 'image-upload' , 'ImageUploadController@imageUpload' )->name('image.upload'); 
+
+Route::post( 'image-upload' , 'ImageUploadController@imageUploadPost' )->name('image.upload.post'); 

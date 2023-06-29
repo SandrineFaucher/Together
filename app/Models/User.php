@@ -35,7 +35,7 @@ public function role()
 public function isAdmin()
 {
     //return $this->role == "admin";
-    return $this->role_id ==2;
+    return $this->role_id == 2;
 }
     /**
      * The attributes that are mass assignable.
@@ -67,8 +67,5 @@ public function isAdmin()
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
-
-
-
 
 }
