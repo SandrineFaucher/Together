@@ -15,9 +15,10 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(User $user)
     {
-        //
+        $user->load('posts'); // je charge les posts du user
+        return view('user.show', compact('user')); // je renvoie la vue en y injectant le user à l'intérieur
     }
 
     /**
@@ -40,12 +41,12 @@ class UserController extends Controller
     {
         $request->validate([
             'pseudo' => 'required|max:40',
-            'image' => 'nullable|string'
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
         //on modifie les infos de l'utilisateur
         $user->pseudo = $request->input('pseudo');
-        $user->image = $request->input('image');
+        $user->image = isset($request ['image']) ? uploadImage($request['image']): "default_user.jpg";
 
         //on sauvegarde les changements en bdd
         $user->save();

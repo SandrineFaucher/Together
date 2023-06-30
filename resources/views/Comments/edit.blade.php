@@ -6,17 +6,17 @@
       
         <div class="row">
                           
-            <form action="{{ route('comments.update', $comment) }}" method="POST">
+            <form action="{{ route('comments.update', $comment) }}" method="POST" enctype="multipart/form-data">
                 @csrf<!--balise de sécurité contre les failles csrf-->
                 @method('PUT')
     
                 <!--****************************input image *************************************-->
                     <div class="updateimage mx-auto w-50 mt-5 mb-2 text-center">
-                    <label class="uploadimage"> Importer une image < à 2 MO <input
-                            class="form-control @error('image') is-invalid @enderror" type="text" name="image"
-                            id="fileToUpload" value="image.jpg">
+                        <label class="uploadimage"> Importer une image < à 2 MO <input
+                            class="form-control @error('image') is-invalid @enderror" type="file" name="image"
+                            id="fileToUpload">
                             <i class="fa-solid fa-file-import "></i>
-                    </label>
+                        </label>
                     </div>
     
                 @error('image')

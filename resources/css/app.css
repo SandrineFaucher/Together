@@ -1,3 +1,16 @@
+/* GENERAL */
+
+a{
+    text-decoration-line: none;
+    color :black;
+}
+
+body{
+    padding-top: 30px;
+}
+
+
+
 /* HOME.BLADE */
 .background{
     background-color: rgb(62, 243, 180);
@@ -8,15 +21,42 @@
     width: 40px;
 }
 
-h5::after {
-    display: block;
-    height: 2px;
-    background-color: rgb(45, 118, 45);
-    width: 800px;
-    content: " ";
-    margin-top: 10px;
-}
-
 .imagesearchnofound{
     width: 400px;
 }
+
+h5::after {
+    display: block;
+    height: 2px;
+    background-color: rgb(51, 40, 214);
+    width: 50vw;
+    content: " ";
+    margin: 0 auto;
+    margin-top: 10px;
+}
+h5{
+    color: rgb(51, 40, 214);
+}
+
+.commentimage::after{
+    display: block;
+    height: 2px;
+    background-color: rgb(51, 40, 214);
+    width: 50vw;
+    content: " ";
+    margin: 0 auto;
+    margin-top: 10px;
+
+}
+
+.cadre{
+    width: 50%;
+}
+
+
+/*APP.BLADE */
+h4{
+    color : rgb(51, 40, 214);
+}
+
+

@@ -26,10 +26,10 @@
 
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm fixed-top">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'laravel') }}
+                    <h4 class="mx-auto my-auto">UN AIR D'ECRITURE</h4>
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
@@ -43,7 +43,7 @@
                         <form class="d-flex" role="search" action="/search" methode="GET" role="search">
                             @csrf
                             <input class="form-control me-2" type="search" placeholder="Recherche par mot clé" aria-label="Search" name="search">
-                            <button class="btn btn-outline-success" type="submit">Rechercher</button>
+                            <button class="btn btn-outline-primary" type="submit">Rechercher</button>
                         </form>
                     </ul>
 
@@ -75,7 +75,10 @@
 
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
 
-                                    <a href="{{ route('users.edit', $user = Auth::user()) }}">Mon compte</a>
+                                    <a href="{{ route('users.edit', $user = Auth::user()) }}">
+
+                                        <h6 class="titlemoncompte ms-3">Mon compte</h6>
+                                    </a>
 
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                         onclick="event.preventDefault();

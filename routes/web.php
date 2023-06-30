@@ -38,7 +38,7 @@ Route::resource('/users', App\Http\Controllers\UserController::class)->except('i
 
 
 //*************************route resource posts *****************************************************************/
-Route::resource('/posts', App\Http\Controllers\PostController::class)->except('index','create','show');
+Route::resource('/posts', App\Http\Controllers\PostController::class)->except('index','create');
 
 
 //*************************Route resource comments *************************/
@@ -48,7 +48,3 @@ Route::resource('/comments', App\Http\Controllers\CommentController::class)->exc
 Route::get('/search', [App\Http\Controllers\PostController::class, 'search'])->name('search');
 
 
-//******************Routes pour générer le formulaire et pour la méthode de publication *************************/
-Route::get( 'image-upload' , 'ImageUploadController@imageUpload' )->name('image.upload'); 
-
-Route::post( 'image-upload' , 'ImageUploadController@imageUploadPost' )->name('image.upload.post'); 

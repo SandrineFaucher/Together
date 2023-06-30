@@ -13,7 +13,7 @@ class User extends Authenticatable
     use HasApiTokens, HasFactory, Notifiable;
 // nom au pluriel car un user peut poster plusieurs quacks
 //cardinalité 0,n
-public function post()
+public function posts()
 {
     return $this->hasMany(Post::class);
 }

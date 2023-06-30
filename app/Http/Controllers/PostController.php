@@ -64,14 +64,14 @@ class PostController extends Controller
 
             // validation des données à modifier 
                  $request->validate([
-                'image' => 'nullable',
+                'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
                 'content' => 'required|min:25|max:1000',
                 'tags' => 'required|min:3|max:50'
             ]);
     
             //on sauvegarde les modifications en bdd
             $post->update([
-            'image' => $request->input('image'),
+            'image' => isset($request ['image']) ? uploadImage($request['image']): "default_user.jpg",
             'content' => $request->input('content'),
             'tags' => $request->input('tags'),
             
